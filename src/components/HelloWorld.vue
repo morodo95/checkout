@@ -1,58 +1,72 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="container">
+    <div class="notificacion">
+      <b-carousel>
+        <b-carousel-item v-for="(carousel, i) in carousels" :key="i">
+            <section :class="`hero is-medium is-${carousel.color}`">
+                <div class="hero-body has-text-centered">
+                    <h1 class="title">{{carousel.text}}</h1>
+                </div>
+            </section>
+        </b-carousel-item>           
+    </b-carousel>
+    <b-field label="Select a date">
+        <b-datepicker
+            placeholder="Click to select..."
+            v-model="dates"
+            inline
+            :min-date="minDate"
+            :max-date="maxDate"
+            range>
+        </b-datepicker>
+    </b-field>
+
+    
+    </div>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+    data(){
+        const today = new Date()
+        return {
+           dates: [],
+           minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+           maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 356),
+            carousels: [
+                { text: 'Slide 1', color: 'primary' },
+                { text: 'Slide 2', color: 'info' },
+                { text: 'Slide 3', color: 'success' },
+                { text: 'Slide 4', color: 'warning' },
+                { text: 'Slide 5', color: 'danger' }
+            ]
+        }
+    },
+    mounted() {
+            console.log(process.env);
+    },
+   
 }
 </script>
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+#nav {
+  padding: 30px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
+
+#nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
